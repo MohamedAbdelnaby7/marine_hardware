@@ -1,0 +1,4 @@
+pymavlink==2.4.41
+gpiozero==2.0.1
+lgpio==0.2.2.0
+pyyaml==6.0.1
