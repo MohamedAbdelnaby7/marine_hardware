@@ -38,7 +38,6 @@ button    = Button(BUTTON_PIN, pull_up=True, bounce_time=0.3)
 green_led = LED(GREEN_PIN)
 red_led   = LED(RED_PIN)
 
-
 # ── MAVLink helpers ────────────────────────────────────────────────────────────
 def connect_vehicle(vehicle: dict):
     name     = vehicle["name"]
@@ -46,6 +45,12 @@ def connect_vehicle(vehicle: dict):
     log.info("Connecting to %s at %s ...", name, conn_str)
     try:
         conn = mavutil.mavlink_connection(conn_str, autoreconnect=True)
+        # Send one heartbeat first so UDP vehicle knows our address
+        conn.mav.heartbeat_send(
+            mavutil.mavlink.MAV_TYPE_GCS,
+            mavutil.mavlink.MAV_AUTOPILOT_INVALID,
+            0, 0, 0
+        )
         hb = conn.wait_heartbeat(timeout=10)
         if hb is None:
             log.warning("No heartbeat from %s after 10s — vehicle unreachable", name)
