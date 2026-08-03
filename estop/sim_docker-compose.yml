@@ -1,0 +1,21 @@
+services:
+  fake_vehicles:
+    build: .
+    container_name: fake_vehicles
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python3 /app/sim_estop.py
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  estop:
+    depends_on:
+      - fake_vehicles
+    volumes:
+      - ./sim_config.yml:/app/config.yml:ro
+      - /dev:/dev

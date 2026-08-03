@@ -1,0 +1,18 @@
+vehicles:
+  - name: "ROV1"
+    connection: "udpout:127.0.0.1:14550"
+    system_id: 1
+  - name: "ROV2"
+    connection: "udpout:127.0.0.1:14551"
+    system_id: 1
+  - name: "Boat"
+    connection: "udpout:127.0.0.1:14552"
+    system_id: 1
+
+gpio:
+  button_pin: 17
+  green_led_pin: 19
+  red_led_pin: 26
+
+disarm_interval_ms: 500
+heartbeat_interval_s: 1
